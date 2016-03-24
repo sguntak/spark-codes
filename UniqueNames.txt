@@ -1,0 +1,11 @@
+import org.apache.spark.SparkConf
+import org.apache.spark.SparkContext
+import org.apache.spark.SparkContext._
+
+val sc = new SparkContext(conf)
+
+sc.textFile(“file:///names”)
+ .map(name => (name.charAt(0), name))
+ .groupByKey()
+ .mapValues(names => names.toSet.size)
+ .collect()
