@@ -1,0 +1,11 @@
+import org.apache.spark.sparkConf
+import org.apache.spark.sparkContext.
+import org.apache.spark.sparkContext._
+
+val conf = new SparkConf().setMaster("local").setAppName("WordCount")
+val sc = new SparkContext(conf);
+
+val inputfile = sc.textFile("file:///home/swaapnika/Desktop/wordcount.txt")
+val words = inputfile.flatmap(line => line.split(" "))
+val count = words.map(word => (word,1)).reduceBykey{case(x,y) => x + y}
+count.saevAsTextFile(outputFile)
